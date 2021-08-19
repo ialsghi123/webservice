@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="layout/header :: header"/>
+    <h1>스프링 부트 JPA 웹서비스</h1>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/posts/save" role="button" class="btn  btn-primary">글 등록</a>
+                <span th:if="${userName}">Logged in as:<span id="user" th:text="${userName}"></span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                </span>
+                <span th:unless="${userName}">
+                    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                </span>
+            </div>
+        </div>
+        <br>
+        <!-- 목록 출력 영역 -->
+        <table class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>게시글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>최종수정일</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr th:each="posts : ${posts}">
+                    <td th:text="${posts.id}"></td>
+                    <td><a href="#" th:href="@{/posts/update/{id} (id=${posts.id})}" th:text="${posts.title}"></a></td>
+<!--                    <td th:text="${posts.title}"></td>-->
+                    <td th:text="${posts.author}"></td>
+                    <td th:text="${posts.modifiedDate}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<div th:replace="layout/footer :: footer"/>
+
+</body>
+</html>
